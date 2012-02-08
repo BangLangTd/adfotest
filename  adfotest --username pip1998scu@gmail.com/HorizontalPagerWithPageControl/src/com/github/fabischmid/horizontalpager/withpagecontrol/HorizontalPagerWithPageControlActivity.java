@@ -1,12 +1,19 @@
 package com.github.fabischmid.horizontalpager.withpagecontrol;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import com.github.fabischmid.horizontalpager.withpagecontrol.HorizontalPagerWithPageControl.OnFlingListener;
 import com.github.fabischmid.horizontalpager.withpagecontrol.HorizontalPagerWithPageControl.OnScreenSwitchListener;
 
+import android.R.string;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class HorizontalPagerWithPageControlActivity extends Activity {
@@ -31,14 +38,18 @@ public class HorizontalPagerWithPageControlActivity extends Activity {
 			public void onFling(int Scrollx) {
 				// TODO Auto-generated method stub
 				if (mPager.getCurrentScreen() == mPager.getChildCount()-1 && Scrollx > 0) {
+					ScrollView scrollView = new ScrollView(HorizontalPagerWithPageControlActivity.this);
 					TextView text = new TextView(HorizontalPagerWithPageControlActivity.this);
 					text.setText(mPager.getChildCount()+"picture");
-					mPager.addView(text, mPager.getChildCount(), params);
+					scrollView.addView(text);
+					mPager.addView(scrollView, mPager.getChildCount(), params);
 					mPager.freshPagerControl();
 				}else if (mPager.getCurrentScreen() == 0 && Scrollx < 0) {
+					ScrollView scrollView = new ScrollView(HorizontalPagerWithPageControlActivity.this);
 					TextView text = new TextView(HorizontalPagerWithPageControlActivity.this);
-					text.setText(mPager.getChildCount()+"picture");
-					mPager.addView(text, 0, params);
+					text.setText(mPager.getChildCount()+"before");
+					scrollView.addView(text);
+					mPager.addView(scrollView, 0, params);
 					mPager.setCurrentScreen(1, false);
 					mPager.freshPagerControl();
 				}
@@ -72,5 +83,6 @@ public class HorizontalPagerWithPageControlActivity extends Activity {
  * look at xml 
  * /////////////////////////////////
  */
+ 
 
 }
